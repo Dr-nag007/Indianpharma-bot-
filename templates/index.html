@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Indian Drug RAG Chatbot</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <h1>Indian Drug RAG Chatbot</h1>
+            <p>Ask questions about Indian medicines, pricing, manufacturers, and composition.</p>
+        </div>
+
+        <div id="chat-window" class="chat-window"></div>
+
+        <form id="chat-form" class="chat-form">
+            <input id="question-input" type="text" placeholder="Ask a question..." autocomplete="off" />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const chatWindow = document.getElementById('chat-window');
+        const chatForm = document.getElementById('chat-form');
+        const questionInput = document.getElementById('question-input');
+
+        const history = [];
+
+        function renderMessage(sender, text) {
+            const messageEl = document.createElement('div');
+            messageEl.className = `chat-message ${sender}`;
+            messageEl.innerHTML = `<div class="message-bubble"><strong>${sender}</strong><p>${text}</p></div>`;
+            chatWindow.appendChild(messageEl);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function renderSources(sources) {
+            if (!sources.length) return;
+            const sourceEl = document.createElement('div');
+            sourceEl.className = 'chat-message assistant';
+            const listItems = sources.map(src => `<li>${src.title}</li>`).join('');
+            sourceEl.innerHTML = `<div class="message-bubble"><strong>Sources</strong><ul>${listItems}</ul></div>`;
+            chatWindow.appendChild(sourceEl);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const question = questionInput.value.trim();
+            if (!question) return;
+
+            renderMessage('User', question);
+            questionInput.value = '';
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question, history })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                renderMessage('Assistant', `Error: ${error.error || 'Unable to get response'}`);
+                return;
+            }
+
+            const data = await response.json();
+            renderMessage('Assistant', data.answer);
+            renderSources(data.sources);
+            history.push({ user: question, assistant: data.answer });
+        });
+    </script>
+</body>
+</html>

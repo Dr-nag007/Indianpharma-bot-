@@ -1,0 +1,89 @@
+# Core Dependencies
+# ============================================================================
+
+# OpenAI SDK - For embeddings and LLM generation
+openai>=1.0.0
+
+# Pinecone - Vector database for semantic search
+pinecone-client>=3.0.0
+
+# Data Processing
+# ============================================================================
+
+# Pandas - Data manipulation and analysis
+pandas>=2.0.0
+
+# NumPy - Numerical computing
+numpy>=1.24.0
+
+# Openpyxl - Excel file support
+openpyxl>=3.10.0
+
+# PDF support
+PyPDF2>=3.0.0
+
+# LangChain for text splitting and utilities
+langchain>=0.0.300
+
+# Web Framework & API
+# ============================================================================
+
+# FastAPI - Modern async web framework
+fastapi>=0.104.0
+
+# Uvicorn - ASGI server for FastAPI
+uvicorn>=0.24.0
+
+# Pydantic - Data validation and settings management
+pydantic>=2.0.0
+
+# Pydantic Settings - Configuration management
+pydantic-settings>=2.0.0
+
+# Environment Variables
+# ============================================================================
+
+# python-dotenv - Load environment variables from .env
+python-dotenv>=1.0.0
+
+# Utilities
+# ============================================================================
+
+# Requests - HTTP library for API calls
+requests>=2.31.0
+
+# Python-multipart - Multipart form data support
+python-multipart>=0.0.6
+
+# Development & Testing
+# ============================================================================
+
+# Pytest - Testing framework
+pytest>=7.4.0
+
+# Pytest-asyncio - Async test support
+pytest-asyncio>=0.21.0
+
+# Black - Code formatter
+black>=23.0.0
+
+# Flake8 - Code linter
+flake8>=6.0.0
+
+# Mypy - Static type checker
+mypy>=1.5.0
+
+# Logging & Monitoring
+# ============================================================================
+
+# Python logging is built-in, configuration handled in code
+
+# Deployment
+# ============================================================================
+
+# Gunicorn - Production WSGI server
+gunicorn>=21.0.0
+
+# Note: For production deployment on Railway or Render, 
+# the platform will automatically use uvicorn for async support
+
